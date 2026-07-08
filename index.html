@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Волшебство для тебя</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div id="love-bg" class="love-background hidden"></div>
+
+    <div class="main-container">
+        <div id="start-screen">
+            <h1>У меня есть для тебя кое-что особенное...</h1>
+            <button id="magic-btn">Нажми на меня</button>
+        </div>
+
+        <div id="result-screen" class="hidden">
+            <div class="heart-mask">
+                <img src="girl.jpg" onerror="this.src='girl.jpeg'; this.onerror=null;" alt="Самая красивая" id="final-photo">
+            </div>
+            <h2 class="love-title">Ты чудо! ❤️</h2>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
