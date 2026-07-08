@@ -1,120 +1,51 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #fdfbfb;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: #333;
-    overflow: hidden;
-    position: relative;
-}
-
-/* Море текста на фоне */
-.love-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    font-size: 14px;
-    line-height: 18px;
-    color: rgba(255, 118, 117, 0.15);
-    font-weight: bold;
-    word-break: break-all;
-    overflow: hidden;
-    z-index: 1;
-    user-select: none;
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-.main-container {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-}
-
-h1 {
-    font-size: 2em;
-    margin-bottom: 30px;
-    color: #d63031;
-}
-
-button {
-    padding: 15px 40px;
-    font-size: 1.2em;
-    background-color: #ff7675;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(255, 118, 117, 0.4);
-    transition: all 0.3s ease;
-}
-
-button:hover {
-    background-color: #d63031;
-    transform: translateY(-3px) scale(1.05);
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* Идеальная маска-сердце с красным фоном под фото */
-.heart-mask {
-    width: 380px; /* Сделали сердце чуть побольше */
-    height: 380px;
-    margin: 0 auto 20px;
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    
-    /* Красный фон. Если фото где-то не дотягивается до краев, 
-       там будет красивый цвет самого сердца, и форма не потеряется */
-    background-color: #ff7675; 
-    
-    /* Трафарет сердца */
-    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
-    mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
-    
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-}
-
-/* Настройки фотографии без жесткого зума */
-#final-photo {
-    width: 100%;
-    height: 100%;
-    
-    /* contain полностью отдаляет фото, чтобы оно влезло целиком */
-    object-fit: contain; 
-    
-    /* Если захочется сделать чуть-чуть крупнее, можно менять scale. 
-       Сейчас стоит 1.15 — это идеальный баланс, чтобы убрать лишнюю пустоту, но сохранить весь кадр */
-    transform: scale(1.15); 
-    
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 5;
-    opacity: 0;
-    transition: opacity 2s ease;
-}
-
+/* Делаем надпись кликабельной и намекаем пользователю курсором-ручкой */
 .love-title {
-    font-size: 24px;
-    color: #d63031;
-    margin-top: 20px;
-    animation: pulse 1.5s infinite;
+    cursor: pointer;
+    user-select: none;
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
+/* Стили для вылетающих из текста сердечек */
+.burst-heart {
+    position: absolute;
+    z-index: 100;
+    pointer-events: none; /* Чтобы они не мешали кликать повторно */
+    animation: flyOut 1s ease-out forwards;
+    transform: translate(-50%, -60%); /* Центрируем точку вылета */
+}
+
+@keyframes flyOut {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    100% {
+        /* Сердечки разлетаются в стороны на заданные в JS координаты и плавно исчезают */
+        transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.2);
+        opacity: 0;
+    }
+}/* Делаем надпись кликабельной и намекаем пользователю курсором-ручкой */
+.love-title {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Стили для вылетающих из текста сердечек */
+.burst-heart {
+    position: absolute;
+    z-index: 100;
+    pointer-events: none; /* Чтобы они не мешали кликать повторно */
+    animation: flyOut 1s ease-out forwards;
+    transform: translate(-50%, -60%); /* Центрируем точку вылета */
+}
+
+@keyframes flyOut {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    100% {
+        /* Сердечки разлетаются в стороны на заданные в JS координаты и плавно исчезают */
+        transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.2);
+        opacity: 0;
+    }
 }
